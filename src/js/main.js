@@ -1,3 +1,3 @@
 import './lib/lib';
 
-$('div').hide().toggleDisplay();
+$('.active').isClass('active');

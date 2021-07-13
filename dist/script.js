@@ -126,9 +126,89 @@ window.$ = $;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core */ "./src/js/lib/core.js");
 /* harmony import */ var _modules_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/display */ "./src/js/lib/modules/display.js");
+/* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/js/lib/modules/classes.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/classes.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addClass = function (...classNames) {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      console.log(`${this[i]} not property classlist`);
+      continue;
+    }
+
+    this[i].classList.add(...classNames);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeClass = function (...classNames) {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      console.log(`${this[i]} not property classlist`);
+      continue;
+    }
+
+    this[i].classList.remove(...classNames);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleClass = function (classNames) {
+  if (!classNames) {
+    console.log('not arguments');
+    return;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      console.log(`${this[i]} not property classlist`);
+      continue;
+    }
+
+    this[i].classList.toggle(classNames);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.isClass = function (classNames) {
+  if (!classNames) {
+    console.log('not arguments');
+    return;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      console.log(`${this[i]} not property classlist`);
+      continue;
+    }
+
+    if (this[i].classList.contains(classNames)) {
+      console.log(`true classname ${classNames}`);
+    }
+  }
+
+  return this;
+};
 
 /***/ }),
 
@@ -200,7 +280,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleDisplay = function
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
-$('div').hide().toggleDisplay();
+$('.active').isClass('active');
 
 /***/ })
 

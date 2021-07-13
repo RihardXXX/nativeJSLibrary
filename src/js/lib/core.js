@@ -1,4 +1,4 @@
-const $ = function (selector) {
+const $  = function (selector) {
   return new $.prototype.init(selector);
 };
 
