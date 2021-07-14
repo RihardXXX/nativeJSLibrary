@@ -25,7 +25,7 @@ $.prototype.removeClass = function (...classNames) {
 $.prototype.toggleClass = function (classNames) {
   if (!classNames) {
     console.log('not arguments');
-    return;
+    return this;
   }
   for (let i = 0; i < this.length; i++) {
     if (!this[i].classList) {
@@ -40,7 +40,7 @@ $.prototype.toggleClass = function (classNames) {
 $.prototype.isClass = function (classNames) {
   if (!classNames) {
     console.log('not arguments');
-    return;
+    return this;
   }
   for (let i = 0; i < this.length; i++) {
     if (!this[i].classList) {
