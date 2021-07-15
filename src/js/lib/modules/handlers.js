@@ -8,6 +8,7 @@ $.prototype.v_on = function (event, callback) {
   for (let i = 0; i < this.length; i++) {
     this[i].addEventListener(event, callback);
   }
+  return this;
 };
 
 $.prototype.v_off = function (event, callback) {
@@ -18,6 +19,7 @@ $.prototype.v_off = function (event, callback) {
   for (let i = 0; i < this.length; i++) {
     this[i].removeEventListener(event, callback);
   }
+  return this;
 };
 
 $.prototype.click = function (handler) {
@@ -28,4 +30,5 @@ $.prototype.click = function (handler) {
       this[i].click();
     }
   }
+  return this;
 };
