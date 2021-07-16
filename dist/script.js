@@ -183,6 +183,43 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.eq = function (i) {
   return this;
 };
 
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.index = function () {
+  const parent = this[0].parentNode;
+  const childs = [...parent.children];
+  return childs.findIndex(item => item === this[0]);
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.find = function (selector) {
+  const newObj = this[0].querySelectorAll(selector);
+
+  for (let i = 0; i < this.length; i++) {
+    delete this[i];
+  }
+
+  Object.assign(this, newObj);
+  this.length = newObj.length;
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (selector) {
+  let counter = 0;
+
+  for (let i = 0; i < this.length; i++) {
+    if (this[i].closest(selector) === null) {
+      return this;
+    } else {
+      this[i] = this[i].closest(selector);
+      counter++;
+    }
+  }
+
+  for (; counter < this.length; i++) {
+    delete this[counter];
+  }
+
+  return this;
+};
+
 /***/ }),
 
 /***/ "./src/js/lib/modules/attributes.js":
@@ -453,6 +490,7 @@ __webpack_require__.r(__webpack_exports__);
 $('button').click(function () {
   $('div').eq(2).toggleClass('active');
 });
+console.log($('div').closest('.mee'));
 
 /***/ })
 
