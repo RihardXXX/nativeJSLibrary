@@ -136,6 +136,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handlers */ "./src/js/lib/modules/handlers.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
 /* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
+/* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+
 
 
 
@@ -190,14 +192,32 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.index = function () {
 };
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.find = function (selector) {
-  const newObj = this[0].querySelectorAll(selector);
+  let numberOfItems = 0;
+  let counter = 0;
+  const copyObj = Object.assign({}, this);
 
-  for (let i = 0; i < this.length; i++) {
-    delete this[i];
+  for (let i = 0; i < copyObj.length; i++) {
+    const arr = copyObj[i].querySelectorAll(selector);
+
+    if (arr.length == 0) {
+      continue;
+    }
+
+    for (let j = 0; j < arr.length; j++) {
+      this[counter] = arr[j];
+      counter++;
+    }
+
+    numberOfItems += arr.length;
   }
 
-  Object.assign(this, newObj);
-  this.length = newObj.length;
+  this.length = numberOfItems;
+  const objLength = Object.keys(this).length;
+
+  for (; numberOfItems < objLength; numberOfItems++) {
+    delete this[numberOfItems];
+  }
+
   return this;
 };
 
@@ -215,6 +235,55 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (sele
 
   for (; counter < this.length; i++) {
     delete this[counter];
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (selector) {
+  let counter = 0;
+
+  for (let i = 0; i < this.length; i++) {
+    if (this[i].closest(selector) === null) {
+      return this;
+    } else {
+      this[i] = this[i].closest(selector);
+      counter++;
+    }
+  }
+
+  for (; counter < this.length; i++) {
+    delete this[counter];
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.siblings = function () {
+  let numberOfItems = 0;
+  let counter = 0;
+  const copyObj = Object.assign({}, this);
+
+  for (let i = 0; i < copyObj.length; i++) {
+    const arr = copyObj[i].parentNode.children;
+
+    for (let j = 0; j < arr.length; j++) {
+      if (copyObj[i] === arr[j]) {
+        continue;
+      }
+
+      this[counter] = arr[j];
+      counter++;
+    }
+
+    numberOfItems += arr.length - 1;
+  }
+
+  this.length = numberOfItems;
+  const objLength = Object.keys(this).length;
+
+  for (; numberOfItems < objLength; numberOfItems++) {
+    delete this[numberOfItems];
   }
 
   return this;
@@ -421,6 +490,68 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleDisplay = function
 
 /***/ }),
 
+/***/ "./src/js/lib/modules/effects.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/effects.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animationOverTime = function (duration, callback, finalCallback) {
+  let start = null;
+
+  function _animationOverTime(timestamp) {
+    if (!start) start = timestamp;
+    let progress = timestamp - start;
+    let complection = Math.min(progress / duration, 1);
+    callback(complection);
+
+    if (progress < duration) {
+      requestAnimationFrame(_animationOverTime);
+    } else {
+      if (typeof finalCallback === 'function') finalCallback();
+    }
+  }
+
+  return _animationOverTime;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (duration, display, finalCallback) {
+  for (let i = 0; i < this.length; i++) {
+    this[i].style.display = display || 'block';
+
+    const _fadeIn = complection => {
+      this[i].style.opacity = complection;
+    };
+
+    const ani = this.animationOverTime(duration, _fadeIn, finalCallback);
+    requestAnimationFrame(ani);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (duration, finalCallback) {
+  for (let i = 0; i < this.length; i++) {
+    const _fadeOut = complection => {
+      this[i].style.opacity = 1 - complection;
+      if (complection === 1) this[i].style.display = 'none';
+    };
+
+    const ani = this.animationOverTime(duration, _fadeOut, finalCallback);
+    requestAnimationFrame(ani);
+  }
+
+  return this;
+};
+
+/***/ }),
+
 /***/ "./src/js/lib/modules/handlers.js":
 /*!****************************************!*\
   !*** ./src/js/lib/modules/handlers.js ***!
@@ -486,11 +617,13 @@ __webpack_require__.r(__webpack_exports__);
  // console.log($('button').setAtr('id', 'rihard').hasAtr('id'));
 // console.log($('.active').getAtr('id'));
 // console.log($('button').html('button'));
+// $('button').click(function () {
+//   $('div').eq(2).toggleClass('active');
+// });
 
 $('button').click(function () {
-  $('div').eq(2).toggleClass('active');
+  $('.active').fadeOut(3500);
 });
-console.log($('div').closest('.mee'));
 
 /***/ })
 
