@@ -47,3 +47,14 @@ $.prototype.fadeOut = function (duration, finalCallback) {
   }
   return this;
 };
+
+$.prototype.fadeToggle = function (duration, display, finalCallback) {
+  for (let i = 0; i < this.length; i++) {
+    if (window.getComputedStyle(this[i]).display === 'none') {
+      $(this[i]).fadeIn(duration);
+    } else {
+      $(this[i]).fadeOut(duration);
+    }
+  }
+  return this;
+};

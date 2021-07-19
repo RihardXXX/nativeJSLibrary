@@ -1,22 +1,39 @@
 import './lib/lib';
 
-// console.log($('button').setAtr('id', 'rihard').hasAtr('id'));
-// console.log($('.active').getAtr('id'));
-// console.log($('button').html('button'));
-// $('button').click(function () {
-//   $('div').eq(2).toggleClass('active');
-// });
-
 $('#first').v_on('click', () => {
-  $('div').eq(1).fadeOut(800);
+  $('div').eq(1).fadeToggle(800);
 });
 
 $('[data-count="second"]').v_on('click', () => {
-  $('div').eq(2).fadeOut(800);
+  $('div').eq(2).fadeToggle(800);
 });
 
 $('button')
   .eq(2)
   .v_on('click', () => {
-    $('.w-500').fadeOut(800);
+    $('.w-500').fadeToggle(800);
   });
+
+$('.wrap').html(`
+  <div class="dropdown">
+    <button
+      class="btn btn-primary dropdown-toggle"
+      id="dropdown-menu-button"
+    >
+      button dropdown
+    </button>
+    <ul class="dropdown-menu" data-toggle-id="dropdown-menu-button">
+      <li class="dropdown-item">
+        <a href="#"><b>action: 1</b></a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#"><b>action: 2</b></a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#"><b>action: 3</b></a>
+      </li>
+    </ul>
+  </div>`);
+
+// в режиме spa,когда разметка не готова
+$('.dropdown-toggle').dropdown();
