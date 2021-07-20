@@ -125,6 +125,70 @@
       background-color: rgba(0, 0, 0, 0.15);
       border-radius: 2px; }
 
+.card {
+  width: 350px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: center; }
+  .card-img {
+    width: 100%; }
+  .card-body {
+    padding: 10px; }
+  .card-title {
+    font-size: 22px;
+    margin-bottom: 10px; }
+  .card-text {
+    margin-bottom: 10px; }
+  .card a {
+    text-decoration: none; }
+
+.modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1500;
+  background-color: rgba(150, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+  overflow: hidden;
+  display: none; }
+  .modal-dialog {
+    max-width: 500px;
+    margin: 100px auto; }
+  .modal-content {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    max-height: 80vh;
+    text-align: center; }
+    .modal-content .close {
+      border: none;
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      font-size: 60px;
+      color: #000;
+      opacity: 0.5;
+      font-weight: 700;
+      z-index: 1600;
+      cursor: pointer;
+      background-color: transparent; }
+  .modal-header, .modal-body {
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6; }
+  .modal-footer {
+    padding: 15px; }
+  .modal-title {
+    font-weight: 700;
+    font-size: 32px; }
+
 .text-center {
   text-align: center; }
 
