@@ -121,33 +121,101 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
 
 
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function () {
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function (created) {
   for (let i = 0; i < this.length; i++) {
     const target = this[i].getAttribute('data-target');
-    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).v_on('click', e => {
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).click(e => {
       e.preventDefault();
       Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeIn(500);
       document.body.style.overflow = 'hidden';
     });
-  }
+    const closeElements = document.querySelectorAll(`${target} [data-close]`);
+    closeElements.forEach(elem => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(elem).click(() => {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeOut(500);
+        document.body.style.overflow = '';
 
-  const closeElements = document.querySelectorAll('[data-close]');
-  closeElements.forEach(closeElement => {
-    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(closeElement).v_on('click', e => {
-      e.preventDefault();
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').fadeOut(500);
-      document.body.style.overflow = 'visible';
+        if (created) {
+          document.querySelector(target).remove();
+        }
+      });
     });
-  });
-  Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').v_on('click', e => {
-    if (e.target.classList.contains('modal')) {
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').fadeOut(500);
-      document.body.style.overflow = 'visible';
-    }
-  });
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).click(e => {
+      if (e.target.classList.contains('modal')) {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeOut(500);
+        document.body.style.overflow = '';
+
+        if (created) {
+          document.querySelector(target).remove();
+        }
+      }
+    });
+  }
 };
 
 Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-toggle="modals"]').modal();
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createModal = function ({
+  text,
+  btns
+} = {}) {
+  for (let i = 0; i < this.length; i++) {
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.setAttribute('id', this[i].getAttribute('data-target').slice(1));
+    const {
+      title,
+      body
+    } = text;
+    const {
+      count,
+      settings: {
+        info,
+        classNames,
+        close,
+        callback
+      }
+    } = btns;
+    const buttons = [];
+
+    for (let j = 0; j < count; j++) {
+      let btn = document.createElement('button');
+      btn.classList.add('btn', ...classNames[j]);
+      btn.textContent = info[j];
+      if (close[j]) btn.setAttribute('data-close', close[j]);
+
+      if (callback[j] && typeof callback === 'function') {
+        btn.addEventListener(callback[j]);
+      }
+
+      buttons.push(btn);
+    }
+
+    modal.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <button data-close class="close">
+          <span>&times;</span>
+        </button>
+        <div class="modal-header">
+          <span class="modal-title">${title}</span>
+        </div>
+        <div class="modal-body">
+          ${body}
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+    `;
+    modal.querySelector('.modal-footer').append(...buttons);
+    console.log(modal);
+    document.body.appendChild(modal);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).modal(true);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].getAttribute('data-target')).fadeIn(500);
+  }
+};
 
 /***/ }),
 
@@ -727,6 +795,35 @@ $('.wrap').html(`
   </div>`); // в режиме spa,когда разметка не готова
 
 $('.dropdown-toggle').dropdown();
+$('#trigger').v_on('click', function (e) {
+  $(this).createModal({
+    text: {
+      title: 'title',
+      body: 'body'
+    },
+    btns: {
+      count: 2,
+      settings: {
+        info: ['close', 'open'],
+        classNames: [['btn-primary'], ['btn-success']],
+        close: [true, false],
+        callback: [() => alert('alert')]
+      }
+    }
+  });
+}); // $('#trigger').click(() =>
+//   $('#trigger').createModal({
+//     text: { title: 'title', body: 'body' },
+//     btns: {
+//       count: 2,
+//       settings: {
+//         info: ['close', 'open'],
+//         classNames: [['btn-primary'], ['btn-success']],
+//         close: true,
+//       },
+//     },
+//   })
+// );
 
 /***/ })
 

@@ -37,3 +37,32 @@ $('.wrap').html(`
 
 // в режиме spa,когда разметка не готова
 $('.dropdown-toggle').dropdown();
+
+$('#trigger').v_on('click', function (e) {
+  $(this).createModal({
+    text: { title: 'title', body: 'body' },
+    btns: {
+      count: 2,
+      settings: {
+        info: ['close', 'open'],
+        classNames: [['btn-primary'], ['btn-success']],
+        close: [true, false],
+        callback: [() => alert('alert')],
+      },
+    },
+  });
+});
+
+// $('#trigger').click(() =>
+//   $('#trigger').createModal({
+//     text: { title: 'title', body: 'body' },
+//     btns: {
+//       count: 2,
+//       settings: {
+//         info: ['close', 'open'],
+//         classNames: [['btn-primary'], ['btn-success']],
+//         close: true,
+//       },
+//     },
+//   })
+// );
