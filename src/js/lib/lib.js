@@ -7,5 +7,6 @@ import './modules/attributes';
 import './modules/effects';
 import './components/dropdown';
 import './components/modal';
+import './components/tabs';
 
 export default $;

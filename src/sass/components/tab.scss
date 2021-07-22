@@ -1,0 +1,36 @@
+.tab {
+  max-width: 700px;
+  &-panel {
+    display: flex;
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px 5px 0 0;
+  }
+  &-item {
+    padding: 10px 25px;
+    font-size: 20px;
+    line-height: 25px;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    &-active {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  &-item:nth-child(3) {
+    border-right: none;
+  }
+  &-content {
+    display: none;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    margin-bottom: 20px;
+    &-active {
+      display: block;
+    }
+  }
+}
