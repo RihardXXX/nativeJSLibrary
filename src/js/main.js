@@ -66,3 +66,5 @@ $('#trigger').v_on('click', function (e) {
 //     },
 //   })
 // );
+
+$('.accordion-head').accordion();
