@@ -1,19 +1,23 @@
 import './lib/lib';
 
+// =============
 $('#first').v_on('click', () => {
   $('div').eq(1).fadeToggle(800);
 });
 
+// =============
 $('[data-count="second"]').v_on('click', () => {
   $('div').eq(2).fadeToggle(800);
 });
 
+// =============
 $('button')
   .eq(2)
   .v_on('click', () => {
     $('.w-500').fadeToggle(800);
   });
 
+// =============
 $('.wrap').html(`
   <div class="dropdown">
     <button
@@ -38,6 +42,7 @@ $('.wrap').html(`
 // в режиме spa,когда разметка не готова
 $('.dropdown-toggle').dropdown();
 
+// ===========
 $('#trigger').v_on('click', function (e) {
   $(this).createModal({
     text: { title: 'title', body: 'body' },
@@ -67,4 +72,20 @@ $('#trigger').v_on('click', function (e) {
 //   })
 // );
 
+// ==========
 $('.accordion-head').accordion();
+
+// ===========
+$().get('https://jsonplaceholder.typicode.com/posts');
+$().post(
+  'https://jsonplaceholder.typicode.com/posts',
+  JSON.stringify({
+    title: 'foo',
+    body: 'bar',
+    userId: 1,
+  })
+);
+
+const url = 'https://jsonplaceholder.typicode.com/posts/';
+// ===========
+$().requestsGet([`${url}1`, `${url}2`, `${url}3`, `${url}4`, `${url}5`]);
