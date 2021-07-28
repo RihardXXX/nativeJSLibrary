@@ -1,0 +1,13 @@
+.carousel {
+  margin-top: 30px;
+  border: 3px solid rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+}
+
+.animal-cart {
+  margin-top: 100px;
+}
+
+.step {
+  margin-top: 100px;
+}
